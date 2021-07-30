@@ -1,3 +1,6 @@
 # DMNetworkStatus
 
-A description of this package.
+* DMNetworkStatus is a NWPathMonitor wrapper library for checking network status easily.
+
+## Swift Package Manager
+
