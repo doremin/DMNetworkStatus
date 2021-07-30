@@ -2,13 +2,12 @@ import Network
 import RxSwift
 
 @available(iOS 12.0, *)
-open class DMNetworkStatus: ReactiveCompatible {
-    public init() { }
-}
+open class DMNetworkStatus {
+    public static let shared = DMNetworkStatus()
 
-@available(iOS 12.0, *)
-extension Reactive where Base == DMNetworkStatus {
-    var isWifiConnected: Observable<Bool> {
+    private init() { }
+
+    public var isWifiConnected: Observable<Bool> {
         return Observable<Bool>.create { observer in
             let monitor = NWPathMonitor(requiredInterfaceType: .wifi)
             let queue = DispatchQueue(label: "wifi-queue")
@@ -27,7 +26,7 @@ extension Reactive where Base == DMNetworkStatus {
         }
     }
 
-    var isCellularConnected: Observable<Bool> {
+    public var isCellularConnected: Observable<Bool> {
         return Observable<Bool>.create { observer in
             let monitor = NWPathMonitor(requiredInterfaceType: .cellular)
             let queue = DispatchQueue(label: "cellular-queue")
@@ -46,7 +45,7 @@ extension Reactive where Base == DMNetworkStatus {
         }
     }
 
-    var isEthernetConnected: Observable<Bool> {
+    public var isEthernetConnected: Observable<Bool> {
         return Observable<Bool>.create { observer in
             let monitor = NWPathMonitor(requiredInterfaceType: .wiredEthernet)
             let queue = DispatchQueue(label: "ethernet-queue")
@@ -65,7 +64,7 @@ extension Reactive where Base == DMNetworkStatus {
         }
     }
 
-    var isNetworkConnected: Observable<Bool> {
+    public var isNetworkConnected: Observable<Bool> {
         return Observable.combineLatest(isWifiConnected, isCellularConnected, isEthernetConnected)
             .map { $0 || $1 || $2 }
             .distinctUntilChanged()
