@@ -2,7 +2,7 @@ import Network
 import RxSwift
 
 @available(iOS 12.0, *)
-public struct DMNetworkStatus: ReactiveCompatible {
+open class DMNetworkStatus: ReactiveCompatible {
     public init() { }
 }
 
